@@ -55,8 +55,11 @@ English and Amharic (EN / አማ). Switching to Amharic translates every public 
 ## Contact number
 The office phone and WhatsApp number are set once in `js/config.js` (`phone` and `wa`) and used across the site.
 
+## Floating contact button
+A round message button stays fixed in the corner of every public page. Tapping it opens WhatsApp, Telegram, Call and Email. It reads `wa`, `phone`, `telegram` and `email` from `js/config.js`: `telegram` can be a phone number starting with + or a username; a channel is hidden when its value is missing, and Email stays hidden while the address still contains "example.". It is not shown on the staff dashboard.
+
 ## Tests
-`node tests/i18n.js` checks that every English text on the public pages has an Amharic translation, and `node tests/translator.js` tests the translator itself. `node tests/smoke.js` runs the dashboard, booking and Manage pages for every role against a fake browser (no Supabase needed). It checks what each role sees, that client text is escaped, and that the main actions call the right functions. It does not test the SQL files; run those on a test Supabase project first.
+`node tests/widget.js` tests the contact button. `node tests/i18n.js` checks that every English text on the public pages has an Amharic translation, and `node tests/translator.js` tests the translator itself. `node tests/smoke.js` runs the dashboard, booking and Manage pages for every role against a fake browser (no Supabase needed). It checks what each role sees, that client text is escaped, and that the main actions call the right functions. It does not test the SQL files; run those on a test Supabase project first.
 
 ## Confirmation emails go to localhost?
 Supabase > Authentication > URL Configuration: set **Site URL** to your real site address (the default is http://localhost:3000), and under **Redirect URLs** add `https://YOUR-DOMAIN.com/**` (and `http://localhost:3000/**` while testing). The sign-up and reset-password requests now send the admin page address as the redirect, but Supabase only honours it if it matches the Redirect URLs list. To test locally: `cd lawyer-site && python3 -m http.server 3000`, then open http://localhost:3000/admin.html.
