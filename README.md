@@ -50,10 +50,13 @@ Each lawyer sets their own weekly hours ("My hours") and time off ("My time off"
 Clients attach up to 5 files (PDF, JPG, PNG, DOCX, 2 MB each) to a booking. Only admins and the assigned lawyer can download them. They are uploaded by outsiders: open them only on a computer with up-to-date security software.
 
 ## Languages
-English, Amharic and Afaan Oromo (EN / አማ / OM). Only the navigation, home hero and page titles are translated so far. Have a native speaker review the Amharic and Afaan Oromo text before launch.
+English and Amharic (EN / አማ). Switching to Amharic translates every public page, the booking flow and the footer using `js/i18n-am.js` (English text is the source; add or edit Amharic there). The staff dashboard stays in English. Articles the lawyer writes are shown in the language he wrote them. Have a native speaker review the Amharic text, especially the Terms and privacy page, before launch.
+
+## Contact number
+The office phone and WhatsApp number are set once in `js/config.js` (`phone` and `wa`) and used across the site.
 
 ## Tests
-`node tests/smoke.js` runs the dashboard, booking and Manage pages for every role against a fake browser (no Supabase needed). It checks what each role sees, that client text is escaped, and that the main actions call the right functions. It does not test the SQL files; run those on a test Supabase project first.
+`node tests/i18n.js` checks that every English text on the public pages has an Amharic translation, and `node tests/translator.js` tests the translator itself. `node tests/smoke.js` runs the dashboard, booking and Manage pages for every role against a fake browser (no Supabase needed). It checks what each role sees, that client text is escaped, and that the main actions call the right functions. It does not test the SQL files; run those on a test Supabase project first.
 
 ## Confirmation emails go to localhost?
 Supabase > Authentication > URL Configuration: set **Site URL** to your real site address (the default is http://localhost:3000), and under **Redirect URLs** add `https://YOUR-DOMAIN.com/**` (and `http://localhost:3000/**` while testing). The sign-up and reset-password requests now send the admin page address as the redirect, but Supabase only honours it if it matches the Redirect URLs list. To test locally: `cd lawyer-site && python3 -m http.server 3000`, then open http://localhost:3000/admin.html.

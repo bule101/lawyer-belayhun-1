@@ -114,3 +114,7 @@ footer .fine{border-top:1px solid color-mix(in srgb,var(--onG) 25%,transparent);
 .dh{font-size:23px!important;margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}
 .quote{font:500 22px/1.4 "Cormorant Garamond","Noto Serif Ethiopic",serif;margin:10px 0}
 @media print{header,footer,.sbar,.cta,.band,.drop,.skip,.burger{display:none!important}body{background:#fff;color:#000}.reveal{opacity:1!important;transform:none!important}a{text-decoration:none}}
+
+body[data-noi18n] .lang{display:none!important}
+html[lang=am] nav.d,html[lang=am] .eyebrow,html[lang=am] .bn small,html[lang=am] .clause:before{letter-spacing:.02em;text-transform:none}
+html[lang=am] body{line-height:1.8}html[lang=am] h1,html[lang=am] h2{line-height:1.25}

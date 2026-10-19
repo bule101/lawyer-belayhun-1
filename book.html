@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Source+Sans+3:wght@400;500;600&family=Noto+Serif+Ethiopic:wght@500;700&family=Noto+Sans+Ethiopic:wght@400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="css/style.css"><link rel="icon" href="favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#0e3b2e"><title>Book a consultation | Adv. Belayhun</title><meta name="description" content="Book a consultation with Adv. Belayhun online. Choose a service, date and time."></head><body><div id="hdr"></div><main id="main">
-<div class="wrap page"><h1 data-en="Book a consultation" data-am="ቀጠሮ ያስይዙ" data-om="Beellama Qabadhu">Book a consultation</h1><p class="sub">Choose a service, pick a time and confirm. Times that are taken or unavailable cannot be selected.</p></div>
+<div class="wrap page"><h1>Book a consultation</h1><p class="sub">Choose a service, pick a time and confirm. Times that are taken or unavailable cannot be selected.</p></div>
 <div class="wrap" style="padding-bottom:40px"><div class="book"><div class="prog" id="prog"><span class="on">Service</span><span>Date &amp; time</span><span>Your details</span><span>Confirmed</span></div>
 <div class="step on" data-s="0"><span class="lbl">What do you need help with?</span><div class="opts" id="sv"></div><span class="lbl">How would you like to meet?</span><div class="opts" id="md"></div><div id="lwrow" hidden><span class="lbl">Preferred lawyer</span><select class="in" id="lw" style="width:100%;max-width:420px"><option value="">Any available lawyer</option></select></div><div class="foot"><span></span><button class="btn" id="n0" disabled>Continue</button></div></div>
 <div class="step" data-s="1"><div class="err" id="aerr"></div><span class="lbl">Choose a day</span><div class="days" id="days"></div><span class="lbl">Choose a time (Addis Ababa time)</span><div class="slots" id="slots"></div><div class="foot"><button class="btn ghost" data-back>Back</button><button class="btn" id="n1" disabled>Continue</button></div></div>
@@ -11,7 +11,7 @@
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[c]),LID=()=>lw.value||null;let DOC={};
 const SV=[["Initial consultation",30],["Case review",60],["Contract review",45]],MD=[["Office","office"],["Phone call","phone"],["Video call","video"]];
 let st={s:null,m:null,d:null,t:null},OPEN=new Set();
-const key=d=>d.toLocaleDateString("en-CA"),fmt=(d,o)=>d.toLocaleDateString(lang==="am"?"am-ET":lang==="om"?"om-ET":"en-GB",o);
+const key=d=>d.toLocaleDateString("en-CA"),fmt=(d,o)=>d.toLocaleDateString(lang==="am"?"am-ET":"en-GB",o);
 function opts(){sv.innerHTML=SV.map((s,k)=>'<button class="opt" aria-pressed="'+(st.s===k)+'" data-k="'+k+'"><b>'+s[0]+'</b><span>'+s[1]+' min</span></button>').join("");md.innerHTML=MD.map((s,k)=>'<button class="opt" aria-pressed="'+(st.m===k)+'" data-k="'+k+'"><b>'+s[0]+'</b></button>').join("");
  sv.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{st.s=+b.dataset.k;opts()});md.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{st.m=+b.dataset.k;opts()});n0.disabled=st.s===null||st.m===null}
 let W=14;const days=()=>[...Array(W)].map((_,i)=>new Date(API.addDays(API.today(),i)+"T12:00:00"));
@@ -26,7 +26,7 @@ async function loadOpen(){try{W=(await API.settings()).window_days;OPEN=new Set(
 function go(n){document.querySelectorAll(".step").forEach(s=>s.classList.toggle("on",+s.dataset.s===n));document.querySelectorAll("#prog span").forEach((p,i)=>{p.classList.toggle("on",i===n);p.classList.toggle("done",i<n)});document.getElementById("prog").scrollIntoView({behavior:"smooth"})}
 n0.onclick=()=>{go(1);loadOpen();renderSlots()};n1.onclick=()=>go(2);document.querySelectorAll("[data-back]").forEach(b=>b.onclick=()=>go(+b.closest(".step").dataset.s-1));
 n2.onclick=async()=>{const n=fn.value.trim(),p=ph.value.trim(),e=em.value.trim();
- if(n.length<2)return err.textContent="Enter your full name.";if(!/^\+?[0-9 -]{9,15}$/.test(p))return err.textContent="Enter a valid phone number, for example +251 911 000 000.";if(e&&!/^\S+@\S+\.\S+$/.test(e))return err.textContent="Check your email address.";
+ if(n.length<2)return err.textContent="Enter your full name.";if(!/^\+?[0-9 -]{9,15}$/.test(p))return err.textContent="Enter a valid phone number, for example +251 9XX XXX XXX.";if(e&&!/^\S+@\S+\.\S+$/.test(e))return err.textContent="Check your email address.";
  if(hp.value)return err.textContent="Something went wrong. Please call the office.";if(!ag.checked)return err.textContent="Please agree to the Terms of use and Privacy notice to continue.";
  err.textContent="";n2.disabled=true;let ref;
  try{ref=await API.book({lawyer:LID(),svc:st.s,svcName:SV[st.s][0],mode:MD[st.m][1],date:st.d,time:st.t,name:n,phone:p,email:e,note:nt.value.trim()})}
@@ -34,13 +34,13 @@ n2.onclick=async()=>{const n=fn.value.trim(),p=ph.value.trim(),e=em.value.trim()
  n2.disabled=false;const d=fmt(new Date(st.d+"T12:00:00"),{weekday:"long",day:"numeric",month:"long",year:"numeric"});
  ref_.textContent=ref;msg.textContent=API.live?"Your booking is received. We will confirm it within 24 hours.":"Demo mode: your request is saved in this browser. Send it to the office to confirm.";
  sum.innerHTML=[["Service",SV[st.s][0]+" ("+SV[st.s][1]+" min)"],["Meeting",MD[st.m][0]],["When",d+", "+st.t],["Name",n],["Phone",p]].map(r=>"<div><span>"+r[0]+"</span><b></b></div>").join("");
- sum.querySelectorAll("b").forEach((b,i)=>b.textContent=[SV[st.s][0]+" ("+SV[st.s][1]+" min)",MD[st.m][0],d+", "+st.t,n,p][i]);
+ sum.querySelectorAll("b").forEach((b,i)=>b.textContent=[T(SV[st.s][0])+" ("+SV[st.s][1]+" "+T("min")+")",T(MD[st.m][0]),d+", "+st.t,n,p][i]);
  const m="Booking "+ref+"\n"+SV[st.s][0]+", "+MD[st.m][0]+"\n"+d+" at "+st.t+"\nName: "+n+"\nPhone: "+p+(e?"\nEmail: "+e:"")+"\nMatter: "+(nt.value.trim()||"-");
  wa.href="https://wa.me/"+CFG.wa+"?text="+encodeURIComponent(m);ml.href="mailto:"+CFG.email+"?subject="+encodeURIComponent("Booking "+ref)+"&body="+encodeURIComponent(m);
  const dt=st.d.replace(/-/g,"")+"T"+st.t.replace(":","")+"00",ic=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Lawyer//EN","BEGIN:VEVENT","UID:"+ref+"@lawyer-site","DTSTAMP:"+new Date().toISOString().replace(/[-:]|\.\d+/g,""),"DTSTART;TZID=Africa/Addis_Ababa:"+dt,"DURATION:PT"+SV[st.s][1]+"M","SUMMARY:Consultation with "+CFG.name+" ("+ref+")","LOCATION:"+(MD[st.m][1]==="office"?CFG.address:MD[st.m][0]),"END:VEVENT","END:VCALENDAR"].join("\r\n");
  ics.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(ic);DOC={ref,phone:p};docl.innerHTML="";go(3)};
 docu.onclick=async()=>{const fs=[...docf.files];if(!fs.length){docl.innerHTML='<span class="bad">Choose one or more files first.</span>';return}docu.disabled=true;docl.innerHTML="";
- for(const f of fs){try{const r=await API.readFile(f);await API.uploadDoc(DOC.ref,DOC.phone,r);docl.insertAdjacentHTML("beforeend","<div class='ok'>Uploaded: "+esc(f.name)+"</div>")}catch(e){docl.insertAdjacentHTML("beforeend","<div class='bad'>"+esc(e.message)+"</div>")}}docf.value="";docu.disabled=false};
+ for(const f of fs){try{const r=await API.readFile(f);await API.uploadDoc(DOC.ref,DOC.phone,r);docl.insertAdjacentHTML("beforeend","<div class='ok'><span>Uploaded</span>: "+esc(f.name)+"</div>")}catch(e){docl.insertAdjacentHTML("beforeend","<div class='bad'>"+esc(e.message)+"</div>")}}docf.value="";docu.disabled=false};
 API.lawyers().then(l=>{if(l.length>1){lwrow.hidden=false;lw.innerHTML+=l.map(x=>'<option value="'+esc(x.id)+'">'+esc(x.name)+(x.title?" — "+esc(x.title):"")+'</option>').join("")}});
 again.onclick=()=>{st={s:null,m:null,d:null,t:null};[fn,ph,em,nt].forEach(i=>i.value="");ag.checked=false;opts();go(0)};
 {const q=new URLSearchParams(location.search).get("svc");if(q!==null&&SV[+q])st.s=+q}

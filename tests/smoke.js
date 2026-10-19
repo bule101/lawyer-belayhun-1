@@ -15,7 +15,7 @@ function runPage(file,API,extra=""){const html=fs.readFileSync(path.join(root,fi
  const getEl=id=>EL[id]||(EL[id]=mkEl(id));ids.forEach(getEl);
  const shims={document:{getElementById:getEl,createElement:()=>mkEl("n"),querySelectorAll:()=>[],querySelector:()=>mkEl("q"),addEventListener(){},body:mkEl("body"),documentElement:{classList:{add(){}},dataset:{}}},
   window:{scrollTo(){}},location:{hash:"",pathname:"/"+file,search:""},history:{replaceState(){}},URL:Object.assign(function(){},{createObjectURL:()=>"blob:x",revokeObjectURL(){}}),URLSearchParams,Blob:function(){},
-  confirm:()=>true,prompt:()=>"Value text here",alert:m=>alerts.push(m),CFG:{name:"Adv. Belayhun",phone:"+251 911 000 000",wa:"251911000000",email:"x@y.z",address:"Bole"},API,lang:"en",__hook:o=>Object.assign(hook,o),$:s=>getEl(s.replace("#","")),$$:()=>[]};
+  confirm:()=>true,prompt:()=>"Value text here",alert:m=>alerts.push(m),CFG:{name:"Adv. Belayhun",phone:"+251 911 000 000",wa:"251911000000",email:"x@y.z",address:"Bole"},API,lang:"en",T:s=>s,__hook:o=>Object.assign(hook,o),$:s=>getEl(s.replace("#","")),$$:()=>[]};
  const g=new Proxy({},{has:(t,k)=>typeof k==="string"&&(ids.has(k)||k in shims),get:(t,k)=>ids.has(k)?getEl(k):shims[k],set:(t,k,v)=>{shims[k]=v;return true}});
  new Function("g","with(g){"+js+"\n;"+extra+"}")(g);return{EL,hook,alerts}}
 const spy=(API,names)=>{const calls=[];for(const n of names){const o=API[n];API[n]=async(...a)=>{calls.push([n,...a]);return o.apply(API,a)}}return calls};
