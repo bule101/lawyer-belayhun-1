@@ -52,11 +52,14 @@ Clients attach up to 5 files (PDF, JPG, PNG, DOCX, 2 MB each) to a booking. Only
 ## Languages
 English and Amharic (EN / አማ). Switching to Amharic translates every public page, the booking flow and the footer using `js/i18n-am.js` (English text is the source; add or edit Amharic there). The staff dashboard stays in English. Articles the lawyer writes are shown in the language he wrote them. Have a native speaker review the Amharic text, especially the Terms and privacy page, before launch.
 
+## Design
+Navy and gold palette on clean white, with Playfair Display headings and Inter body text. Colours are variables at the top of `css/style.css` (`--green` is the main navy, `--gold` the accent). Dark mode follows the visitor's device setting.
+
 ## Contact number
 The office phone and WhatsApp number are set once in `js/config.js` (`phone` and `wa`) and used across the site.
 
 ## Floating contact button
-A round message button stays fixed in the corner of every public page. Tapping it opens WhatsApp, Telegram, Call and Email. It reads `wa`, `phone`, `telegram` and `email` from `js/config.js`: `telegram` can be a phone number starting with + or a username; a channel is hidden when its value is missing, and Email stays hidden while the address still contains "example.". It is not shown on the staff dashboard.
+A round message button stays fixed in the corner of every public page. Tapping it opens WhatsApp, Telegram, Call and Email. It reads `wa`, `phone`, `telegram` and `email` from `js/config.js`: Telegram uses the same phone number as WhatsApp unless `telegram` is set to a username; a channel is hidden when its value is missing, and Email stays hidden while the address still contains "example.". It is not shown on the staff dashboard.
 
 ## Tests
 `node tests/widget.js` tests the contact button. `node tests/i18n.js` checks that every English text on the public pages has an Amharic translation, and `node tests/translator.js` tests the translator itself. `node tests/smoke.js` runs the dashboard, booking and Manage pages for every role against a fake browser (no Supabase needed). It checks what each role sees, that client text is escaped, and that the main actions call the right functions. It does not test the SQL files; run those on a test Supabase project first.

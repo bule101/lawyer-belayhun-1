@@ -4,6 +4,7 @@ const here=(location.pathname.split("/").pop()||"index.html");
 let lang=(()=>{try{return localStorage.getItem("lang")||"en"}catch(e){return"en"}})();
 if(lang!=="am")lang="en";const NOI=document.body.hasAttribute("data-noi18n");
 window.T=s=>lang==="am"&&window.AM&&AM[s]!==undefined?AM[s]:s;
+const TG=(()=>{const t=String(CFG.telegram||"").replace(/^@/,"");return t&&t!=="your_username"?t:(CFG.wa?"+"+CFG.wa:"")})();
 const links=cls=>NAV.map(n=>`<a ${cls?'class="l"':""} href="${n[0]}" ${n[0]===here?'aria-current="page"':""}>${n[1]}</a>`).join("");
 const lg=`<div class="lang" role="group" aria-label="Language"><button data-l="en">EN</button><button data-l="am">አማ</button></div>`;
 $("#hdr").innerHTML=`<a class="skip" href="#main">Skip to content</a><header><div class="wrap nav"><a class="brand" href="index.html"><span class="mark"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 7v17M11 24h10M7 11h18M7 11l-4 8a4 4 0 0 0 8 0l-4-8zM25 11l-4 8a4 4 0 0 0 8 0l-4-8z"/></svg></span><span class="bn">${CFG.short}<small>Advocate &amp; Legal Counsel</small></span></a>
@@ -18,7 +19,7 @@ document.addEventListener("click",e=>{if(!e.target.closest("header"))tog(false)}
 dp.addEventListener("click",e=>{if(e.target.closest("a"))tog(false)});
 $("#ftr").innerHTML=`<footer><div class="wrap g"><div><h3>${CFG.name}</h3><p style="opacity:.85;margin:0">Advocate &amp; Legal Counsel<br>${CFG.address}</p></div>
 <div><h3>Pages</h3>${NAV.map(n=>`<a href="${n[0]}">${n[1]}</a>`).join("")}<a href="book.html">Book a consultation</a><a href="manage.html">Manage my booking</a><a href="terms.html">Terms &amp; privacy</a><a href="admin.html">Staff login</a></div>
-<div><h3>Contact</h3><a href="tel:${CFG.phone.replace(/\s/g,"")}">${CFG.phone}</a><a href="mailto:${CFG.email}">${CFG.email}</a><a href="https://wa.me/${CFG.wa}" target="_blank" rel="noopener">WhatsApp</a><a href="https://t.me/${CFG.telegram}" target="_blank" rel="noopener">Telegram</a><div class="soc"><a href="${CFG.facebook}">Facebook</a><a href="${CFG.linkedin}">LinkedIn</a><a href="${CFG.youtube}">YouTube</a></div></div>
+<div><h3>Contact</h3><a href="tel:${CFG.phone.replace(/\s/g,"")}">${CFG.phone}</a><a href="mailto:${CFG.email}">${CFG.email}</a><a href="https://wa.me/${CFG.wa}" target="_blank" rel="noopener">WhatsApp</a>${TG?`<a href="https://t.me/${TG}" target="_blank" rel="noopener">Telegram</a>`:""}<div class="soc"><a href="${CFG.facebook}">Facebook</a><a href="${CFG.linkedin}">LinkedIn</a><a href="${CFG.youtube}">YouTube</a></div></div>
 <div><h3>Hours</h3><span style="opacity:.85" data-hours>Loading…</span></div></div>
 <div class="wrap fine"><a href="terms.html#terms">Terms of use</a><a href="terms.html#privacy">Privacy notice</a><br><br>${CFG.license?"<span>Licensed advocate, licence no.</span> "+CFG.license+"<br>":""}Information on this site is general and is not legal advice. Contacting the office does not by itself create an advocate–client relationship.</div></footer>`;
 /* ---- Amharic translation: English text is the source; js/i18n-am.js maps it to Amharic ---- */
@@ -49,9 +50,9 @@ if(!NOI){const S='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" 
  tg:S+'fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>',
  ph:S+ST+'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
  ml:S+ST+'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6 12 13 2 6"/></svg>'};
- const tgv=String(CFG.telegram||"").replace(/^@/,""),rows=[];
+ const rows=[];
  if(CFG.wa)rows.push(["wa","WhatsApp",CFG.phone,"https://wa.me/"+CFG.wa,1]);
- if(tgv&&tgv!=="your_username")rows.push(["tg","Telegram",tgv[0]==="+"?CFG.phone:"@"+tgv,"https://t.me/"+tgv,1]);
+ if(TG)rows.push(["tg","Telegram",TG[0]==="+"?CFG.phone:"@"+TG,"https://t.me/"+TG,1]);
  if(CFG.phone)rows.push(["ph","Call",CFG.phone,"tel:"+CFG.phone.replace(/\s/g,"")]);
  if(CFG.email&&!/example\./.test(CFG.email))rows.push(["ml","Email",CFG.email,"mailto:"+CFG.email]);
  const cw=document.createElement("div");cw.className="cw";
