@@ -32,7 +32,7 @@ function trTree(root){if(NOI)return;const w=document.createTreeWalker(root,NodeF
  if(root.nodeType===1){trAttr(root);root.querySelectorAll("[placeholder],[aria-label],[alt],[title]").forEach(trAttr)}}
 function trTitle(){if(ORIGT===null)ORIGT=document.title;document.title=lang==="am"&&window.AM&&AM[ORIGT]!==undefined?AM[ORIGT]:ORIGT}
 new MutationObserver(ms=>{if(NOI||lang!=="am"||!window.AM)return;ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===3){if(!SKIP.test(n.parentNode.nodeName))trText(n)}else if(n.nodeType===1)trTree(n)}))}).observe(document.body,{childList:true,subtree:true});
-function withDict(cb){if(window.AM)return cb();const s=document.createElement("script");s.src="js/i18n-am.js";s.onload=cb;document.head.append(s)}
+function withDict(cb){if(window.AM)return cb();const s=document.createElement("script");s.src="js/i18n-am.js?v=8";s.onload=cb;document.head.append(s)}
 function setLang(l){lang=l;try{localStorage.setItem("lang",l)}catch(e){}document.documentElement.lang=l;$$(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===l));
  if(NOI)return;const go=()=>{trTree(document.body);trTitle();drawHours()};if(l==="am")withDict(go);else go()}
 document.addEventListener("click",e=>{const b=e.target.closest(".lang button");if(b)setLang(b.dataset.l)});setLang(lang);
