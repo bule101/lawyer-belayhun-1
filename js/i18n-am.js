@@ -71,6 +71,7 @@ window.AM={
 "Chat with the office": "ከቢሮው ጋር ይወያዩ",
 "Contact options": "የመገናኛ አማራጮች",
 "Close": "ዝጋ",
+"All rights reserved.": "መብቱ በሕግ የተጠበቀ ነው።",
 "Land": "መሬት",
 "What to check before signing a lease": "የኪራይ ውል ከመፈረምዎ በፊት ምን ማረጋገጥ አለብዎት",
 "The clauses that cause most disputes.": "አብዛኛውን ክርክር የሚፈጥሩ አንቀጾች።",
